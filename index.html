@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentMath.app - Level Up Your Math Skills!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat span {
+            font-size: 1.3em;
+        }
+
+        .featured-panel {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4); }
+            to { box-shadow: 0 20px 60px rgba(238, 90, 36, 0.6), 0 0 30px rgba(255, 107, 107, 0.3); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .featured-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .featured-text {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .featured-panel h2 {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .featured-panel p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .featured-panel .emoji {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .btn-featured {
+            display: inline-block;
+            background: white;
+            color: #ee5a24;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-featured:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: #fff5f0;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .game-card h2 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .game-card .emoji {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .question-area {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            border: 3px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .score-display {
+            text-align: center;
+            padding: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+            animation: pop 0.3s ease;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            border: 3px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .option-btn:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .option-btn.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .timer {
+            font-size: 2em;
+            text-align: center;
+            color: #764ba2;
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .streak-badge {
+            display: inline-block;
+            background: #ffd700;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .difficulty-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .achievements {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .achievements h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .badge {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            background: #f0f0f0;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+
+        .badge.unlocked {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            opacity: 1;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .badge-tooltip {
+            position: relative;
+        }
+
+        .badge-tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            white-space: nowrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                gap: 15px;
+            }
+
+            .stat {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 AgentMath.app</h1>
+            <p>Level up your math skills with fun challenges!</p>
+
+            <div class="stats-bar">
+                <div class="stat">🏆 Total Score: <span id="totalScore">0</span></div>
+                <div class="stat">🔥 Best Streak: <span id="bestStreak">0</span></div>
+                <div class="stat">⭐ Level: <span id="playerLevel">1</span></div>
+            </div>
+        </header>
+
+        <!-- Featured Math Master Panel -->
+        <div class="featured-panel">
+            <div class="featured-content">
+                <div class="featured-text">
+                    <div class="emoji">🚀</div>
+                    <h2>AgentMath.app</h2>
+                    <p>Take your math skills to the next level with advanced challenges and personalized learning!</p>
+                </div>
+                <a href="https://bbsisk.pythonanywhere.com" class="btn-featured" target="_blank">
+                    Launch AgentMath.app→
+                </a>
+            </div>
+        </div>
+
+        <div class="games-grid">
+            <!-- Speed Math Game -->
+            <div class="game-card" id="speedMath">
+                <div class="emoji">⚡</div>
+                <h2>Speed Math</h2>
+                <p>How fast can you calculate? Beat the clock!</p>
+
+                <div class="difficulty-selector">
+                    <button class="difficulty-btn active" onclick="setDifficulty('speed', 'easy')">Easy</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('speed', 'medium')">Medium</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('speed', 'hard')">Hard</button>
+                </div>
+
+                <div class="timer" id="speedTimer">30</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="speedProgress" style="width: 100%"></div>
+                </div>
+
+                <div class="question-area" id="speedQuestion">Press Start!</div>
+
+                <input type="number" class="answer-input" id="speedAnswer" placeholder="Your answer..." onkeypress="handleSpeedEnter(event)">
+
+                <button class="btn btn-primary" id="speedBtn" onclick="startSpeedMath()">Start Game</button>
+
+                <div class="feedback" id="speedFeedback"></div>
+
+                <div class="score-display">
+                    Score: <span id="speedScore">0</span> | Streak: <span id="speedStreak">0</span>
+                </div>
+            </div>
+
+            <!-- Algebra Quest -->
+            <div class="game-card" id="algebraQuest">
+                <div class="emoji">🔢</div>
+                <h2>Algebra Quest</h2>
+                <p>Solve for x and become an algebra master!</p>
+
+                <div class="difficulty-selector">
+                    <button class="difficulty-btn active" onclick="setDifficulty('algebra', 'easy')">Easy</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('algebra', 'medium')">Medium</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('algebra', 'hard')">Hard</button>
+                </div>
+
+                <div class="question-area" id="algebraQuestion">Click 'New Problem' to start!</div>
+
+                <input type="number" class="answer-input" id="algebraAnswer" placeholder="x = ?" onkeypress="handleAlgebraEnter(event)">
+
+                <button class="btn btn-primary" onclick="checkAlgebra()">Check Answer</button>
+                <button class="btn btn-secondary" onclick="newAlgebra()">New Problem</button>
+
+                <div class="feedback" id="algebraFeedback"></div>
+
+                <div class="score-display">
+                    Score: <span id="algebraScore">0</span> | Streak: <span id="algebraStreak">0</span>
+                </div>
+            </div>
+
+            <!-- Geometry Challenge -->
+            <div class="game-card" id="geometryChallenge">
+                <div class="emoji">📐</div>
+                <h2>Geometry Challenge</h2>
+                <p>Angles, areas, and shapes await!</p>
+
+                <div class="question-area" id="geometryQuestion">Click 'New Challenge' to start!</div>
+
+                <div class="options-grid" id="geometryOptions">
+                    <!-- Options will be generated here -->
+                </div>
+
+                <button class="btn btn-secondary" onclick="newGeometry()">New Challenge</button>
+
+                <div class="feedback" id="geometryFeedback"></div>
+
+                <div class="score-display">
+                    Score: <span id="geometryScore">0</span> | Streak: <span id="geometryStreak">0</span>
+                </div>
+            </div>
+
+            <!-- Number Patterns -->
+            <div class="game-card" id="patternGame">
+                <div class="emoji">🧩</div>
+                <h2>Pattern Master</h2>
+                <p>Find the next number in the sequence!</p>
+
+                <div class="question-area" id="patternQuestion">Click 'New Pattern' to start!</div>
+
+                <input type="number" class="answer-input" id="patternAnswer" placeholder="Next number..." onkeypress="handlePatternEnter(event)">
+
+                <button class="btn btn-primary" onclick="checkPattern()">Check Answer</button>
+                <button class="btn btn-secondary" onclick="newPattern()">New Pattern</button>
+
+                <div class="feedback" id="patternFeedback"></div>
+
+                <div class="score-display">
+                    Score: <span id="patternScore">0</span> | Streak: <span id="patternStreak">0</span>
+                </div>
+            </div>
+
+            <!-- Percentage Pro -->
+            <div class="game-card" id="percentageGame">
+                <div class="emoji">💯</div>
+                <h2>Percentage Pro</h2>
+                <p>Master percentages and discounts!</p>
+
+                <div class="question-area" id="percentageQuestion">Click 'New Problem' to start!</div>
+
+                <input type="number" class="answer-input" id="percentageAnswer" placeholder="Your answer..." onkeypress="handlePercentEnter(event)">
+
+                <button class="btn btn-primary" onclick="checkPercentage()">Check Answer</button>
+                <button class="btn btn-secondary" onclick="newPercentage()">New Problem</button>
+
+                <div class="feedback" id="percentageFeedback"></div>
+
+                <div class="score-display">
+                    Score: <span id="percentageScore">0</span> | Streak: <span id="percentageStreak">0</span>
+                </div>
+            </div>
+
+            <!-- Equation Balance -->
+            <div class="game-card" id="balanceGame">
+                <div class="emoji">⚖️</div>
+                <h2>Equation Balance</h2>
+                <p>Make both sides equal!</p>
+
+                <div class="question-area" id="balanceQuestion">Click 'New Equation' to start!</div>
+
+                <input type="number" class="answer-input" id="balanceAnswer" placeholder="Missing number..." onkeypress="handleBalanceEnter(event)">
+
+                <button class="btn btn-primary" onclick="checkBalance()">Check Answer</button>
+                <button class="btn btn-secondary" onclick="newBalance()">New Equation</button>
+
+                <div class="feedback" id="balanceFeedback"></div>
+
+                <div class="score-display">
+                    Score: <span id="balanceScore">0</span> | Streak: <span id="balanceStreak">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements Section -->
+        <div class="achievements">
+            <h2>🏅 Achievements</h2>
+            <div class="badges">
+                <div class="badge badge-tooltip" id="badge1" data-tooltip="First Answer">🎯</div>
+                <div class="badge badge-tooltip" id="badge2" data-tooltip="10 Correct">⭐</div>
+                <div class="badge badge-tooltip" id="badge3" data-tooltip="5 Streak">🔥</div>
+                <div class="badge badge-tooltip" id="badge4" data-tooltip="50 Points">💎</div>
+                <div class="badge badge-tooltip" id="badge5" data-tooltip="100 Points">👑</div>
+                <div class="badge badge-tooltip" id="badge6" data-tooltip="Speed Demon">⚡</div>
+                <div class="badge badge-tooltip" id="badge7" data-tooltip="Algebra Pro">🔢</div>
+                <div class="badge badge-tooltip" id="badge8" data-tooltip="Geometry Guru">📐</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Made with ❤️ for math lovers | Keep practicing, keep improving!</p>
+        </footer>
+    </div>
+
+    <script>
+        // Game state
+        let gameState = {
+            totalScore: 0,
+            bestStreak: 0,
+            currentStreak: 0,
+            totalCorrect: 0,
+            speedScore: 0,
+            speedStreak: 0,
+            algebraScore: 0,
+            algebraStreak: 0,
+            geometryScore: 0,
+            geometryStreak: 0,
+            patternScore: 0,
+            patternStreak: 0,
+            percentageScore: 0,
+            percentageStreak: 0,
+            balanceScore: 0,
+            balanceStreak: 0,
+            achievements: []
+        };
+
+        let difficulties = {
+            speed: 'easy',
+            algebra: 'easy'
+        };
+
+        // Current answers
+        let currentAnswers = {
+            speed: null,
+            algebra: null,
+            geometry: null,
+            pattern: null,
+            percentage: null,
+            balance: null
+        };
+
+        // Speed Math variables
+        let speedTimer = null;
+        let speedTimeLeft = 30;
+        let speedGameActive = false;
+
+        // Load saved state
+        function loadState() {
+            const saved = localStorage.getItem('mathQuestState');
+            if (saved) {
+                gameState = { ...gameState, ...JSON.parse(saved) };
+                updateDisplays();
+                checkAchievements();
+            }
+        }
+
+        // Save state
+        function saveState() {
+            localStorage.setItem('mathQuestState', JSON.stringify(gameState));
+        }
+
+        // Update all displays
+        function updateDisplays() {
+            document.getElementById('totalScore').textContent = gameState.totalScore;
+            document.getElementById('bestStreak').textContent = gameState.bestStreak;
+            document.getElementById('playerLevel').textContent = Math.floor(gameState.totalScore / 100) + 1;
+
+            document.getElementById('speedScore').textContent = gameState.speedScore;
+            document.getElementById('speedStreak').textContent = gameState.speedStreak;
+            document.getElementById('algebraScore').textContent = gameState.algebraScore;
+            document.getElementById('algebraStreak').textContent = gameState.algebraStreak;
+            document.getElementById('geometryScore').textContent = gameState.geometryScore;
+            document.getElementById('geometryStreak').textContent = gameState.geometryStreak;
+            document.getElementById('patternScore').textContent = gameState.patternScore;
+            document.getElementById('patternStreak').textContent = gameState.patternStreak;
+            document.getElementById('percentageScore').textContent = gameState.percentageScore;
+            document.getElementById('percentageStreak').textContent = gameState.percentageStreak;
+            document.getElementById('balanceScore').textContent = gameState.balanceScore;
+            document.getElementById('balanceStreak').textContent = gameState.balanceStreak;
+        }
+
+        // Set difficulty
+        function setDifficulty(game, level) {
+            difficulties[game] = level;
+            const buttons = document.querySelectorAll(`#${game === 'speed' ? 'speedMath' : 'algebraQuest'} .difficulty-btn`);
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Generate random number
+        function randInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Show feedback
+        function showFeedback(elementId, correct, message) {
+            const feedback = document.getElementById(elementId);
+            feedback.textContent = message;
+            feedback.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 2000);
+        }
+
+        // Update streak
+        function updateStreak(game, correct) {
+            if (correct) {
+                gameState[game + 'Streak']++;
+                gameState.currentStreak++;
+                if (gameState.currentStreak > gameState.bestStreak) {
+                    gameState.bestStreak = gameState.currentStreak;
+                }
+            } else {
+                gameState[game + 'Streak'] = 0;
+                gameState.currentStreak = 0;
+            }
+        }
+
+        // Add score
+        function addScore(game, points) {
+            gameState[game + 'Score'] += points;
+            gameState.totalScore += points;
+            gameState.totalCorrect++;
+            updateDisplays();
+            checkAchievements();
+            saveState();
+        }
+
+        // Check achievements
+        function checkAchievements() {
+            const achievements = [
+                { id: 'badge1', condition: gameState.totalCorrect >= 1 },
+                { id: 'badge2', condition: gameState.totalCorrect >= 10 },
+                { id: 'badge3', condition: gameState.bestStreak >= 5 },
+                { id: 'badge4', condition: gameState.totalScore >= 50 },
+                { id: 'badge5', condition: gameState.totalScore >= 100 },
+                { id: 'badge6', condition: gameState.speedScore >= 30 },
+                { id: 'badge7', condition: gameState.algebraScore >= 30 },
+                { id: 'badge8', condition: gameState.geometryScore >= 30 }
+            ];
+
+            achievements.forEach(achievement => {
+                if (achievement.condition) {
+                    document.getElementById(achievement.id).classList.add('unlocked');
+                }
+            });
+        }
+
+        // SPEED MATH GAME
+        function startSpeedMath() {
+            if (speedGameActive) return;
+
+            speedGameActive = true;
+            speedTimeLeft = 30;
+            gameState.speedScore = 0;
+            gameState.speedStreak = 0;
+
+            document.getElementById('speedBtn').textContent = 'Playing...';
+            document.getElementById('speedBtn').disabled = true;
+            document.getElementById('speedAnswer').focus();
+
+            generateSpeedQuestion();
+
+            speedTimer = setInterval(() => {
+                speedTimeLeft--;
+                document.getElementById('speedTimer').textContent = speedTimeLeft;
+                document.getElementById('speedProgress').style.width = (speedTimeLeft / 30 * 100) + '%';
+
+                if (speedTimeLeft <= 0) {
+                    endSpeedMath();
+                }
+            }, 1000);
+        }
+
+        function generateSpeedQuestion() {
+            let num1, num2, operator, answer;
+            const diff = difficulties.speed;
+
+            if (diff === 'easy') {
+                num1 = randInt(1, 10);
+                num2 = randInt(1, 10);
+                operator = ['+', '-'][randInt(0, 1)];
+            } else if (diff === 'medium') {
+                num1 = randInt(5, 20);
+                num2 = randInt(5, 20);
+                operator = ['+', '-', '×'][randInt(0, 2)];
+            } else {
+                num1 = randInt(10, 50);
+                num2 = randInt(2, 12);
+                operator = ['+', '-', '×', '÷'][randInt(0, 3)];
+            }
+
+            if (operator === '÷') {
+                answer = num1;
+                num1 = num1 * num2;
+            } else if (operator === '×') {
+                answer = num1 * num2;
+            } else if (operator === '-') {
+                if (num1 < num2) [num1, num2] = [num2, num1];
+                answer = num1 - num2;
+            } else {
+                answer = num1 + num2;
+            }
+
+            currentAnswers.speed = answer;
+            document.getElementById('speedQuestion').textContent = `${num1} ${operator} ${num2} = ?`;
+            document.getElementById('speedAnswer').value = '';
+        }
+
+        function handleSpeedEnter(event) {
+            if (event.key === 'Enter' && speedGameActive) {
+                const userAnswer = parseInt(document.getElementById('speedAnswer').value);
+                if (userAnswer === currentAnswers.speed) {
+                    addScore('speed', 5);
+                    updateStreak('speed', true);
+                    showFeedback('speedFeedback', true, '✓ Correct! +5');
+                } else {
+                    updateStreak('speed', false);
+                    showFeedback('speedFeedback', false, '✗ Wrong!');
+                }
+                updateDisplays();
+                generateSpeedQuestion();
+            }
+        }
+
+        function endSpeedMath() {
+            clearInterval(speedTimer);
+            speedGameActive = false;
+            document.getElementById('speedBtn').textContent = 'Start Game';
+            document.getElementById('speedBtn').disabled = false;
+            document.getElementById('speedQuestion').textContent = `Game Over! Score: ${gameState.speedScore}`;
+            saveState();
+        }
+
+        // ALGEBRA QUEST
+        function newAlgebra() {
+            const diff = difficulties.algebra;
+            let a, b, x, equation;
+
+            if (diff === 'easy') {
+                a = randInt(1, 5);
+                x = randInt(1, 10);
+                b = randInt(1, 20);
+                equation = `${a}x + ${b} = ${a * x + b}`;
+            } else if (diff === 'medium') {
+                a = randInt(2, 8);
+                x = randInt(-10, 10);
+                b = randInt(1, 30);
+                const result = a * x + b;
+                equation = `${a}x ${b >= 0 ? '+' : ''} ${b} = ${result}`;
+            } else {
+                a = randInt(2, 10);
+                const c = randInt(1, 5);
+                x = randInt(-10, 10);
+                b = randInt(1, 20);
+                const result = a * x + b;
+                equation = `${a}x ${b >= 0 ? '+' : ''} ${b} = ${c}x + ${result - c * x}`;
+            }
+
+            currentAnswers.algebra = x;
+            document.getElementById('algebraQuestion').textContent = equation;
+            document.getElementById('algebraAnswer').value = '';
+            document.getElementById('algebraFeedback').style.display = 'none';
+        }
+
+        function checkAlgebra() {
+            const userAnswer = parseInt(document.getElementById('algebraAnswer').value);
+            if (userAnswer === currentAnswers.algebra) {
+                addScore('algebra', 10);
+                updateStreak('algebra', true);
+                showFeedback('algebraFeedback', true, '✓ Correct! x = ' + currentAnswers.algebra);
+            } else {
+                updateStreak('algebra', false);
+                showFeedback('algebraFeedback', false, '✗ Wrong! x = ' + currentAnswers.algebra);
+            }
+            updateDisplays();
+            setTimeout(newAlgebra, 1500);
+        }
+
+        function handleAlgebraEnter(event) {
+            if (event.key === 'Enter') checkAlgebra();
+        }
+
+        // GEOMETRY CHALLENGE
+        const geometryQuestions = [
+            { q: "How many sides does a hexagon have?", a: 6, options: [4, 5, 6, 8] },
+            { q: "What is the sum of angles in a triangle?", a: 180, options: [90, 180, 270, 360] },
+            { q: "How many degrees in a right angle?", a: 90, options: [45, 90, 180, 360] },
+            { q: "Area of rectangle: 5 × 8 = ?", a: 40, options: [13, 26, 40, 80] },
+            { q: "Perimeter of square with side 7?", a: 28, options: [14, 21, 28, 49] },
+            { q: "How many sides does an octagon have?", a: 8, options: [6, 7, 8, 10] },
+            { q: "Sum of angles in a quadrilateral?", a: 360, options: [180, 270, 360, 540] },
+            { q: "Area of triangle: base 6, height 4?", a: 12, options: [10, 12, 20, 24] },
+            { q: "How many vertices does a cube have?", a: 8, options: [4, 6, 8, 12] },
+            { q: "Radius is 5, diameter is?", a: 10, options: [5, 10, 15, 25] },
+            { q: "Complementary angle to 30°?", a: 60, options: [30, 60, 90, 150] },
+            { q: "Supplementary angle to 110°?", a: 70, options: [70, 80, 110, 250] }
+        ];
+
+        function newGeometry() {
+            const question = geometryQuestions[randInt(0, geometryQuestions.length - 1)];
+            currentAnswers.geometry = question.a;
+
+            document.getElementById('geometryQuestion').textContent = question.q;
+
+            const optionsDiv = document.getElementById('geometryOptions');
+            optionsDiv.innerHTML = '';
+
+            // Shuffle options
+            const shuffled = [...question.options].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;
+                btn.onclick = () => checkGeometry(option);
+                optionsDiv.appendChild(btn);
+            });
+
+            document.getElementById('geometryFeedback').style.display = 'none';
+        }
+
+        function checkGeometry(answer) {
+            if (answer === currentAnswers.geometry) {
+                addScore('geometry', 10);
+                updateStreak('geometry', true);
+                showFeedback('geometryFeedback', true, '✓ Correct!');
+            } else {
+                updateStreak('geometry', false);
+                showFeedback('geometryFeedback', false, '✗ Wrong! Answer: ' + currentAnswers.geometry);
+            }
+            updateDisplays();
+            setTimeout(newGeometry, 1500);
+        }
+
+        // PATTERN MASTER
+        function newPattern() {
+            const patterns = [
+                { seq: (n) => n * 2, start: randInt(1, 5), name: 'doubles' },
+                { seq: (n) => n * 3, start: randInt(1, 4), name: 'triples' },
+                { seq: (n) => n + randInt(2, 5), start: randInt(1, 10), name: 'add' },
+                { seq: (n) => n * n, start: 1, name: 'squares' },
+                { seq: (n) => n * 2 + 1, start: 1, name: 'odd' },
+                { seq: (n) => n * 5, start: 1, name: 'fives' }
+            ];
+
+            const pattern = patterns[randInt(0, patterns.length - 1)];
+            const sequence = [];
+            let current = pattern.start;
+
+            for (let i = 0; i < 5; i++) {
+                if (pattern.name === 'add') {
+                    sequence.push(current);
+                    current = pattern.seq(current);
+                } else if (pattern.name === 'squares') {
+                    sequence.push((i + 1) * (i + 1));
+                } else if (pattern.name === 'odd') {
+                    sequence.push(2 * i + 1);
+                } else {
+                    sequence.push(pattern.seq(i + pattern.start));
+                }
+            }
+
+            // Calculate next number
+            if (pattern.name === 'add') {
+                currentAnswers.pattern = pattern.seq(sequence[4]);
+            } else if (pattern.name === 'squares') {
+                currentAnswers.pattern = 36; // 6^2
+            } else if (pattern.name === 'odd') {
+                currentAnswers.pattern = 11; // 2*5 + 1
+            } else {
+                currentAnswers.pattern = pattern.seq(5 + pattern.start);
+            }
+
+            document.getElementById('patternQuestion').textContent =
+                sequence.slice(0, 4).join(', ') + ', ?';
+            currentAnswers.pattern = sequence[4];
+            document.getElementById('patternAnswer').value = '';
+            document.getElementById('patternFeedback').style.display = 'none';
+        }
+
+        function checkPattern() {
+            const userAnswer = parseInt(document.getElementById('patternAnswer').value);
+            if (userAnswer === currentAnswers.pattern) {
+                addScore('pattern', 10);
+                updateStreak('pattern', true);
+                showFeedback('patternFeedback', true, '✓ Correct! ' + currentAnswers.pattern);
+            } else {
+                updateStreak('pattern', false);
+                showFeedback('patternFeedback', false, '✗ Wrong! Answer: ' + currentAnswers.pattern);
+            }
+            updateDisplays();
+            setTimeout(newPattern, 1500);
+        }
+
+        function handlePatternEnter(event) {
+            if (event.key === 'Enter') checkPattern();
+        }
+
+        // PERCENTAGE PRO
+        function newPercentage() {
+            const types = [
+                () => {
+                    const percent = [10, 20, 25, 50, 75][randInt(0, 4)];
+                    const num = randInt(2, 20) * 10;
+                    return { q: `What is ${percent}% of ${num}?`, a: num * percent / 100 };
+                },
+                () => {
+                    const original = randInt(5, 20) * 10;
+                    const discount = [10, 20, 25, 50][randInt(0, 3)];
+                    const final = original - (original * discount / 100);
+                    return { q: `$${original} with ${discount}% off = $?`, a: final };
+                },
+                () => {
+                    const part = randInt(1, 10) * 5;
+                    const whole = part * randInt(2, 4);
+                    return { q: `${part} is what % of ${whole}?`, a: (part / whole) * 100 };
+                }
+            ];
+
+            const problem = types[randInt(0, 2)]();
+            currentAnswers.percentage = problem.a;
+            document.getElementById('percentageQuestion').textContent = problem.q;
+            document.getElementById('percentageAnswer').value = '';
+            document.getElementById('percentageFeedback').style.display = 'none';
+        }
+
+        function checkPercentage() {
+            const userAnswer = parseFloat(document.getElementById('percentageAnswer').value);
+            if (Math.abs(userAnswer - currentAnswers.percentage) < 0.01) {
+                addScore('percentage', 10);
+                updateStreak('percentage', true);
+                showFeedback('percentageFeedback', true, '✓ Correct!');
+            } else {
+                updateStreak('percentage', false);
+                showFeedback('percentageFeedback', false, '✗ Wrong! Answer: ' + currentAnswers.percentage);
+            }
+            updateDisplays();
+            setTimeout(newPercentage, 1500);
+        }
+
+        function handlePercentEnter(event) {
+            if (event.key === 'Enter') checkPercentage();
+        }
+
+        // EQUATION BALANCE
+        function newBalance() {
+            const a = randInt(2, 10);
+            const b = randInt(1, 15);
+            const c = randInt(1, 15);
+            const result = a * b + c;
+
+            currentAnswers.balance = b;
+            document.getElementById('balanceQuestion').textContent = `${a} × ? + ${c} = ${result}`;
+            document.getElementById('balanceAnswer').value = '';
+            document.getElementById('balanceFeedback').style.display = 'none';
+        }
+
+        function checkBalance() {
+            const userAnswer = parseInt(document.getElementById('balanceAnswer').value);
+            if (userAnswer === currentAnswers.balance) {
+                addScore('balance', 10);
+                updateStreak('balance', true);
+                showFeedback('balanceFeedback', true, '✓ Correct!');
+            } else {
+                updateStreak('balance', false);
+                showFeedback('balanceFeedback', false, '✗ Wrong! Answer: ' + currentAnswers.balance);
+            }
+            updateDisplays();
+            setTimeout(newBalance, 1500);
+        }
+
+        function handleBalanceEnter(event) {
+            if (event.key === 'Enter') checkBalance();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            updateDisplays();
+        });
+    </script>
+</body>
+</html>
